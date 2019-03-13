@@ -1,13 +1,14 @@
 const ChatEvent = require("../model/chatEvents"),
-    User = require("../model/user");
+    UserEvent = require("../model/userEvent");
     require("../routes/api")
 
 
 module.exports = (io) =>{
 var numUsers = 0
     io.on('connection', (socket) => {
-        let user = new User({socket_id: socket.id, time_created: Date.now()})
-        user.save();
+        let event = new ChatEvent({type: "CONNECTION", event: 'new user connected', 
+        socket_id: socket.id, timestamp: Date.now()})
+        event.save();
         socket.username = "anonymous"
         socket.room = "general"
 
@@ -23,7 +24,7 @@ var numUsers = 0
                 socket.broadcast.to('general').emit('new_message', {message: data.username + " has connected to this chat", username: "SERVER"});
                 
                 //save event to chatEvents database
-                let event = new ChatEvent({event: socket.username +
+                let event = new ChatEvent({type: "JOINED ROOM", event: socket.username +
                     " has joined room: " + socket.room, chatroom: socket.room, user: socket.username, 
                     socket_id: socket.id, timestamp: Date.now()});
                     event.save().then(event =>{
@@ -31,7 +32,7 @@ var numUsers = 0
                         console.log('')
                     });
                 //update user document and return new updated doc
-                User.findOneAndUpdate({socket_id: socket.id}, {username: socket.username}, 
+                UserEvent.findOneAndUpdate({socket_id: socket.id}, {username: socket.username}, 
                     {new: true}, (err, res) =>{
                     if (err){
                         console.log('socket_id not found')
@@ -52,7 +53,7 @@ var numUsers = 0
 
             // save in event log user disconnected with timestamp
             if(socket.room != null){
-                let event = new ChatEvent({event: socket.username +
+                let event = new ChatEvent({type: "DISCONNECT", event: socket.username +
                     " disconnected from room: " + socket.room, chatroom: socket.room, user: socket.username, 
                     socket_id: socket.id, timestamp: Date.now()});
                     
@@ -67,12 +68,11 @@ var numUsers = 0
 
         //listen on new_message
         socket.on("new_message", (data)=>{
-            let event = new ChatEvent({event: socket.username +
-                " sent a message to room: " + socket.room, chatroom: socket.room, message: data.message, user: socket.username, 
-                socket_id: socket.id, timestamp: Date.now()});
+            let userEvent = new UserEvent({socket_id: socket.id, username: socket.username,
+                chatroom: socket.room, message: data.message, timestamp: Date.now()});
                     
-            event.save().then(event =>{
-                console.log(event.user + " sent a message: " + event.message)
+            userEvent.save().then(event =>{
+                console.log(event.username + " sent a message: " + event.message)
             })
             //broadcast message to all sockets
             io.sockets.in(socket.room).emit('new_message', {message: data.message, username: socket.username});

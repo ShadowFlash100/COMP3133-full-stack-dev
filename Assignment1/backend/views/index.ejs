@@ -13,20 +13,25 @@
         </header>
 
         <section>
-            <div id = "set_username">
-                <input id = "username" type = "text" />
-                <button id = "set_username" type = "button">set username</button>
+            <div id = "username_div">
+                <input id = "username" type = "text" placeholder="Enter username" />
+                <button id = "set_username" type = "button">Set Username</button>
+                <button id = "general" type = "button">General Chat</button>
+                <button id = "off_topic" type = "button">Off Topic</button>
+                <button id = "support" type = "button">Support</button>
             </div>
         </section>
 
         <section id = "chatroom">
             <section id= "feedback"></section>
         </section>
+        <section id = "userlist" style="width: 20%;">
+        </section>
         
         <section id="input_zone"> 
-            <input id="message" class="vertical-align" type="text" />
+            <input id="message" class="vertical-align" type="text" placeholder="Enter message" />
             <button id="send_message" class="vertical-align" type="button">Send</button>
-          </section>
+        </section>
 
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script src="chat.js"></script>

@@ -42,10 +42,21 @@
       border: 5px inset #8258FA;
       height: 85%;
       overflow: auto;
+      width: 80%;
+      float: left;
+  }
+
+  section#userlist { 
+    border: 5px inset #8258FA;
+    height: 85%;
+    overflow: auto;
+    float: right;
   }
   
   section#input_zone {
       height: 7%;
+      float: left;
+      width: 100%;
       text-align: center;
       background-color: #BCA9F5;
   }
