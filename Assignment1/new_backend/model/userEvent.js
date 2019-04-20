@@ -8,4 +8,4 @@ let user = new Schema({
     message: String,
     timestamp: Date
 })
-module.exports = mongoose.model('users', user)
+module.exports = mongoose.model('userEvents', user)
