@@ -3,6 +3,7 @@ const express = require("express"),
     ChatEvent = require("../model/chatEvents"),
     UserModel = require("../model/userEvent");
     Admin = require("../model/admin");
+    ChatRoom = require("../model/chatrooms");
     require('../app')
     socket = require('../controller/SocketControl')
 
@@ -63,6 +64,52 @@ const express = require("express"),
             .catch(err => {
                 res.status(400).send('Failed to create new record')
             })
+    });
+
+    apiRoutes.route('/api/chatroom').get((req, res) =>{
+        ChatRoom.find((err, chatroom) =>{
+            if (err)
+                console.log(err);
+            else
+                res.json(chatroom);
+        })
+    })
+
+    apiRoutes.route('/api/chatroom/add').post((req, res) =>{
+        let chatroom = new ChatRoom(req.body);
+        chatroom.save()
+            .then(admin => {
+                res.status(200).json({'chatroom' : 'Added successfully'});
+            })
+            .catch(err => {
+                res.status(400).send('Failed to create new record')
+            })
+    });
+
+    apiRoutes.route('/api/chatroom/:id').post(function(req, res) {
+        ChatRoom.findById(req.params.id, function(err, room) {
+            if (!room)
+                res.status(404).send('data is not found');
+            else
+                room.name = req.body.name;
+                room.edit_date = req.body.edit_date;
+                room.status = req.body.status;
+                room.date_created = req.body.date_created;
+    
+                room.save().then(room => {
+                    res.json('Room updated');
+                })
+                .catch(err => {
+                    res.status(400).send("Update not possible");
+                });
+        });
+    });
+
+    apiRoutes.route('/api/get/chatroom/:id').get(function(req, res) {
+        let id = req.params.id;
+        ChatRoom.findById(id, function(err, room) {
+            res.json(room);
+        });
     });
 
     module.exports = apiRoutes
