@@ -5,7 +5,7 @@ import Moment from 'moment';
 const History = props => (
     <tr>
         <td>{props.history.id}</td>
-        <td>{Moment(props.history.timestamp).format('MMM Do YY')}</td>
+        <td>{Moment(props.history.timestamp).format('MMM Do YYYY')}</td>
         <td>{Moment(props.history.timestamp).format('h:mm:ss a')}</td>
         <td>{props.history.username}</td>
         {/* <td>{props.history.reciever}</td> */}
@@ -26,6 +26,10 @@ export default class ChatHistory extends Component {
     componentDidMount() {
         this._isMounted = true;
 
+        if(localStorage.getItem("username") !== "admin"){
+            this.props.history.push('/login');
+        }
+
         axios.get('http://localhost:4000/api/history')
             .then(response => {
                 if(this._isMounted){
@@ -38,6 +42,11 @@ export default class ChatHistory extends Component {
     }
 
     componentDidUpdate() {
+
+        if(localStorage.getItem("username") !== "admin"){
+            this.props.history.push('/login');
+        }
+
         axios.get('http://localhost:4000/api/history')
         .then(response => {
             if(this._isMounted){
@@ -59,10 +68,19 @@ export default class ChatHistory extends Component {
         });
     }
 
+    logout(){
+        localStorage.setItem("username", "");
+
+
+    }
+
     render() {
+
         return(
+
             <div>
                 <h3>Chat History</h3>
+                <button onClick={this.logout}>Logout</button>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
