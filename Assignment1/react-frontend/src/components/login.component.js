@@ -47,6 +47,7 @@ export default class Login extends Component {
                         if(element.password === password){
                             localStorage.setItem('username', "admin");
                             this.props.history.push('/');
+                            window.location.reload();
                         }
                     }
                 }

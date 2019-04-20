@@ -70,8 +70,6 @@ export default class ChatHistory extends Component {
 
     logout(){
         localStorage.setItem("username", "");
-
-
     }
 
     render() {
@@ -80,7 +78,6 @@ export default class ChatHistory extends Component {
 
             <div>
                 <h3>Chat History</h3>
-                <button onClick={this.logout}>Logout</button>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
