@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import socket from '../socketClient'
 import {Container, Modal, ListGroup, Input, FormGroup, Form, Button} from 'reactstrap'
-
+import axios from 'axios'
+//import scroll from 'react'
 
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 // import Login from './login.component';
 
 class ChatApp extends Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         this.state = { 
             chatHistory: [],
             input: '',
@@ -22,20 +23,20 @@ class ChatApp extends Component {
     this.onSendMessage = this.onSendMessage.bind(this)
     this.onMessageReceived = this.onMessageReceived.bind(this)
     this.updateChatHistory = this.updateChatHistory.bind(this)
-    this.scrollChatToBottom = this.scrollChatToBottom.bind(this)
+    //this.getChatHistory = this.getChatHistory.bind(this)
+    //this.scrollChatToBottom = this.scrollChatToBottom.bind(this)
     }
 
     componentDidMount() {
-        this.props.registerHandler(this.onMessageReceived)
-        this.scrollChatToBottom()
+        //this.scrollChatToBottom()
     }
 
     componentDidUpdate() {
-        this.scrollChatToBottom()
+        //this.scrollChatToBottom()
     }
 
     componentWillUnmount() {
-        this.props.unregisterHandler()
+        //this.props.unregisterHandler()
     }
 
     onInput(e) {
@@ -64,11 +65,11 @@ class ChatApp extends Component {
     updateChatHistory(entry) {
     this.setState({ chatHistory: this.state.chatHistory.concat(entry) })
     }
-
+/*
     scrollChatToBottom() {
     this.panel.scrollTo(0, this.panel.scrollHeight)
     }
-
+    */
     render() { 
         return (
             <div className = "App">
@@ -77,6 +78,7 @@ class ChatApp extends Component {
                 </div>
                 <div id="chatroom">
                     <form onSubmit = {this.handleMessage}>
+                    
                         <Button>
                             Send
                         </Button>
