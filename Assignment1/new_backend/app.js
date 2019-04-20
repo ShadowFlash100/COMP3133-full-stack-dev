@@ -7,8 +7,8 @@ const express = require('express'),
     apiRoutes = require("./routes/api");
 
     //set the template engine ejs   
-    // app.set('view engine', 'ejs')
-    // app.use(express.static('public'))
+    //  app.set('view engine', 'ejs')
+    //  app.use(express.static('public'))
 
 
     //Connect to mlabs database
@@ -26,9 +26,9 @@ const express = require('express'),
 
     //routes
     app.use('/', apiRoutes)
-    // app.get('/', (req, res) => {
-    //     //res.render("index")
-    // })
+    //  app.get('/', (req, res) => {
+    //      res.render("index")
+    //  })
 
     //create server
     server = app.listen(port, function(){

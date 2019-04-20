@@ -36,6 +36,14 @@ export default class Login extends Component {
         // console.log(`Form submitted:`);
         var user = this.state.username;
         var password = this.state.password;
+        localStorage.setItem("username", user)
+        console.log(`Password: ${this.state.username}`);
+        console.log(`Password: ${this.state.password}`);
+
+        // const newLogin = {
+        //     username: this.state.username,
+        //     password: this.state.password
+        // }
         // console.log(`Password: ${this.state.username}`);
         // console.log(`Password: ${this.state.password}`);
 
