@@ -5,7 +5,7 @@ import axios from 'axios';
 const Event = props => (
     <tr>
         <td>{props.event.type}</td>
-        <td>{Moment(props.event.timestamp).format('MMM Do YYYY')}</td>
+        <td>{Moment(props.event.timestamp).format('MMM Do YY')}</td>
         <td>{Moment(props.event.timestamp).format('h:mm:ss a')}</td>
         <td>{props.event.user}</td>
         <td></td>
@@ -23,10 +23,6 @@ export default class EventHistory extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-
-        if(localStorage.getItem("username") !== "admin"){
-            this.props.history.push('/login');
-        }
 
         axios.get('http://localhost:4000/api/eventlog')
             .then(response => {

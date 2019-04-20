@@ -2,35 +2,32 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 export default class EditRoom extends Component {
-    _isMounted = false;
 
     constructor(props) {
         super(props);
 
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeStatus = this.onChangeStatus.bind(this);
+        this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);
+        this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this);
+        this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
+        this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            name: '',
-            status: ''
+            todo_description: '',
+            todo_responsible: '',
+            todo_priority: '',
+            todo_completed: false
         }
     }
 
     componentDidMount() {
-        this._isMounted = true;
-
-        if(localStorage.getItem("username") !== "admin"){
-            this.props.history.push('/login');
-        }
-
-        axios.get('http://localhost:4000/api/get/chatroom/'+this.props.match.params.id)
+        axios.get('http://localhost:4000/todos/'+this.props.match.params.id)
             .then(response => {
                 this.setState({
-                    name: response.data.name,
-                    status: response.data.status,
-                    date_created: response.data.date_created,
-                    edit_date: response.data.edit_date
+                    todo_description: response.data.todo_description,
+                    todo_responsible: response.data.todo_responsible,
+                    todo_priority: response.data.todo_priority,
+                    todo_completed: response.data.todo_completed
                 })
             })
             .catch(function(error) {
@@ -38,15 +35,27 @@ export default class EditRoom extends Component {
             })
     }
 
-    onChangeName(e){
+    onChangeTodoDescription(e){
         this.setState({
-            name: e.target.value
+            todo_description: e.target.value
         });
     }
 
-    onChangeStatus(e){
+    onChangeTodoResponsible(e){
         this.setState({
-            status: e.target.value
+            todo_responsible: e.target.value
+        });
+    }
+
+    onChangeTodoPriority(e){
+        this.setState({
+            todo_priority: e.target.value
+        });
+    }
+
+    onChangeTodoCompleted(e){
+        this.setState({
+            todo_completed: !this.state.todo_completed
         });
     }
 
@@ -55,37 +64,33 @@ export default class EditRoom extends Component {
         
         const obj = {
             todo_description: this.state.todo_description,
-            name: this.state.name,
-            status: this.state.status,
-            date_created: this.state.date_created,
-            edit_date: Date.now()
+            todo_responsible: this.state.todo_responsible,
+            todo_priority: this.state.todo_priority,
+            todo_completed: this.state.todo_completed
         };
 
-        axios.post('http://localhost:4000/api/chatroom/'+this.props.match.params.id, obj)
+        axios.post('http://localhost:4000/todos/update/'+this.props.match.params.id, obj)
+            .then(res => console.log(res.data));
         
-        this.props.history.push('/rooms');
+        this.props.history.push('/');
     }
 
     render() {
         return(
             <div>
-                <h3>Update Room</h3>
+                <h3>Update Todo</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Room Name: </label>
-                        <input type="text" className="form-control" value={this.state.name} onChange={this.onChangeName} />
+                        <input type="text" className="form-control" value={this.state.todo_description} onChange={this.onChangeTodoDescription} />
                     </div>
                     <div className="form-group">
                         <label>Status: </label>
-                        <br></br>
-                        <select value={this.state.status} onChange={this.onChangeStatus}>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
+                        <input type="text" className="form-control" value={this.state.todo_responsible} onChange={this.onChangeTodoResponsible} />
                     </div>
                     <br/>
                     <div className="form-group">
-                        <input type="submit" value="Update Room" className="btn btn-primary" />
+                        <input type="submit" value="Update Todo" className="btn btn-primary" />
                     </div>
                 </form>
             </div>

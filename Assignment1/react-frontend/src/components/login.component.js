@@ -33,11 +33,16 @@ export default class Login extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-        // console.log(`Form submitted:`);
+        console.log(`Form submitted:`);
         var user = this.state.username;
         var password = this.state.password;
-        // console.log(`Password: ${this.state.username}`);
-        // console.log(`Password: ${this.state.password}`);
+        console.log(`Password: ${this.state.username}`);
+        console.log(`Password: ${this.state.password}`);
+
+        // const newLogin = {
+        //     username: this.state.username,
+        //     password: this.state.password
+        // }
 
         axios.get('http://localhost:4000/api/admin')
             .then(response => {
@@ -45,11 +50,11 @@ export default class Login extends Component {
                     var element = response.data[i];
                     if(element.username === user) {
                         if(element.password === password){
-                            localStorage.setItem('username', "admin");
-                            this.props.history.push('/');
+                            this.props.history.push('/chathistory');
                         }
                     }
                 }
+                console.log(response.data[0].password);
             })
             .catch(function (error) {
                 console.log(error);

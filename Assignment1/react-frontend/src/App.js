@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 // import CreateTodo from './components/create-todo.component';
 // import EditTodo from './components/edit-todo.component';
 // import TodosList from './components/todos-list.component';
@@ -17,12 +16,11 @@ import ChatApp from './components/chat-application.component.jsx';
 // import logo from './logo.svg';
 
 class App extends Component {
-
   render() {
     return (
-
       <Router>
         <div className="container">
+
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
             {/* <a className="navbar-brand">
               <img src={logo} width="30" height="30" alt="Logo Alt" />
@@ -48,7 +46,6 @@ class App extends Component {
             </div>
           </nav>
 
-          <Route path="/" exact component= {ChatApp} />
           <Route path="/eventhistory" exact component={ EventHistory } />
           <Route path="/chathistory" component={ ChatHistory } />
           <Route path="/rooms" component={ Rooms } />
