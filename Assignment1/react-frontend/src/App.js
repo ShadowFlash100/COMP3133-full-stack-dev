@@ -11,7 +11,7 @@ import EventHistory from './components/event-history.component';
 import Rooms from './components/rooms.component';
 import Login from './components/login.component';
 import EditRoom from './components/edit-room.component';
-import ChatApp from './components/chat-application.component';
+import ChatApp from './components/chat-application.component.jsx';
 
 // import logo from './logo.svg';
 
