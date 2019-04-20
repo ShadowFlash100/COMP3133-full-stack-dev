@@ -30,6 +30,10 @@
   width: 80%;
   float: left;
 }
+.chat{
+  height: 80%;
+  border: 5px
+}
 
 
 @keyframes App-logo-spin {
