@@ -31,8 +31,11 @@
   float: left;
 }
 .chat{
-  height: 80%;
-  border: 5px
+  border: 5px inset #8258FA;
+  height: 85%;
+  overflow: auto;
+  width: 80%;
+  float: left;
 }
 
 

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import socket from '../socketClient'
 import DisplayChatBox from './containers/displayChatbox'
 import axios from 'axios'
+import '../styles/styles.css'
 //import scroll from 'react'
 
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
@@ -13,9 +14,10 @@ class ChatApp extends Component {
         this.state = { 
             chatHistory: [],
             input: '',
-            current_room: '',
+            current_room: 'general',
             user: 'guest',
-            client: socket()
+            client: socket(),
+            messages: []
          }
     
 
@@ -63,9 +65,9 @@ class ChatApp extends Component {
         })
     }
 
-    onInput(e) {
+    onInput =(e) => {
         this.setState({
-            input: e.target.value
+            [e.target.name]: e.target.value
     })
     }
 
@@ -92,8 +94,8 @@ class ChatApp extends Component {
     }
 
     getChatHistory(){
-        const {chatName} = this.props.match.params
-        axios.get(`http://localhost:4000/api/roomHistory/${chatName}`)
+        const {chatName} = 'general'
+        axios.post(`http://localhost:4000/api/roomHistory/${chatName}`)
             .then(res => {
                 this.setState({
                     current_room: res.data.chatroom,
@@ -114,13 +116,17 @@ class ChatApp extends Component {
     render() { 
         return (
             <div className = "App">
-                <div>
-                    <h1>Chat Now</h1>
+                <header className = "App-Header">
+                <div id = "chat-header">
+                    <p>{this.state.current_room}</p>
                 </div>
-                <div id="chatroom">
-                    <form onSubmit = {this.handleMessage}>
-                        
-                    </form>
+                </header>
+                <div className ="chat-window">
+                    <section className = "chat">
+                    
+                    </section>
+                    <textarea type="text" name= "message" placeholder= "send a message" onChange = {this.onInput}/>
+                    <button onClick = {this.onNewMessage}>Send</button>
                 </div>
             </div>
         );
