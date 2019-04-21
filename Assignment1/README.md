@@ -8,5 +8,4 @@
 2. run npm install
 3. run npm start (or nodemon)
 
-username: admin
-password: password
+login info: admin, password
