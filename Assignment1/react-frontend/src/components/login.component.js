@@ -3,7 +3,14 @@ import axios from 'axios';
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 // import ChatHistory from './chat-history.component';
 
+const Section = (props) => {
+    return <section><h2>Wrong username or password!</h2></section>
+  }
+
 export default class Login extends Component {
+
+
+    
 
     constructor(props) {
         super(props);
@@ -14,7 +21,8 @@ export default class Login extends Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            error: ''
         };
     }
 
@@ -32,20 +40,9 @@ export default class Login extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-
-        // console.log(`Form submitted:`);
         var user = this.state.username;
         var password = this.state.password;
         localStorage.setItem("username", user)
-        console.log(`Password: ${this.state.username}`);
-        console.log(`Password: ${this.state.password}`);
-
-        // const newLogin = {
-        //     username: this.state.username,
-        //     password: this.state.password
-        // }
-        // console.log(`Password: ${this.state.username}`);
-        // console.log(`Password: ${this.state.password}`);
 
         axios.get('http://localhost:4000/api/admin')
             .then(response => {
@@ -59,6 +56,9 @@ export default class Login extends Component {
                         }
                     }
                 }
+                this.setState({
+                    error: true
+                })
             })
             .catch(function (error) {
                 console.log(error);
@@ -81,6 +81,7 @@ export default class Login extends Component {
                     <div className="form-group">
                         <input type="submit" value="Login" className="btn btn-primary" />
                     </div>
+                    { this.state.error ? <Section/> : null }
                 </form>
             </div>
         )
