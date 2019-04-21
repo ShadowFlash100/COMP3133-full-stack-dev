@@ -3,4 +3,7 @@
 1. cd backend \n
 2. run npm install \n
 3. run node app.js \n
-4. go to localhost:3000 in browser
+4. go to localhost:3000 in browser\n
+\n
+username: admin\n
+password: password
