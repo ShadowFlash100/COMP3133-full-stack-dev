@@ -21,7 +21,7 @@ export default function (){
 
     function message(chatroomName, msg, user, cb) {
         let data = { room:chatroomName, user:user , message: msg }
-        socket.emit('message', data , cb)
+        socket.emit('new_message', data , cb)
     }
 
     return{

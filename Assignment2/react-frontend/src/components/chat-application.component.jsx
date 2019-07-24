@@ -94,8 +94,8 @@ class ChatApp extends Component {
     }
 
     getChatHistory(){
-        const {chatName} = 'general'
-        axios.post(`http://localhost:4000/api/roomHistory/${chatName}`)
+        const {roomName} = this.props.match.params
+        axios.post(`http://localhost:4000/api/roomHistory/${roomName}`)
             .then(res => {
                 this.setState({
                     current_room: res.data.chatroom,
@@ -103,6 +103,7 @@ class ChatApp extends Component {
 
                 })
             })
+        return this.state.chatHistory
     }
 
     updateChatHistory(entry) {
@@ -123,10 +124,14 @@ class ChatApp extends Component {
                 </header>
                 <div className ="chat-window">
                     <section className = "chat">
-                    
+                    {this.state.chatHistory.map(chat => (
+                        <p>{chat.user} {chat.message}</p>
+                    ))}
                     </section>
-                    <textarea type="text" name= "message" placeholder= "send a message" onChange = {this.onInput}/>
-                    <button onClick = {this.onNewMessage}>Send</button>
+                    <form className= "input">
+                        <textarea type="text" name= "message" placeholder= "send a message" onChange = {this.onInput}/>
+                        <button onClick = {this.onNewMessage}>Send</button>
+                    </form>
                 </div>
             </div>
         );
